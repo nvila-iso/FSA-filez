@@ -9,3 +9,14 @@ export async function createFile(name, size) {
   const { rows: files } = await db.query(SQL, [name, size]);
   return files[0];
 }
+
+export async function getFilesWithFolderName() {
+  const SQL = `
+    SELECT files.*, folders.name AS folder_name
+    FROM files
+    JOIN folders 
+        ON files.folder_id = folders.id
+    `;
+  const { rows: files } = await db.query(SQL);
+  return files;
+}
